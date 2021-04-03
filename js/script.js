@@ -6,6 +6,8 @@ let mission = 200000;
 let period = 6;
 
 console.log(typeof money);
+console.log(typeof income);
+console.log(typeof deposit);
 console.log(addExpenses.length);
 console.log('Период равен ' + period + ' месяцев');
 console.log('Цель заработать ' + mission + ' рублей');
