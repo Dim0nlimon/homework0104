@@ -35,7 +35,7 @@ let amount1 = prompt('Во сколько это обойдется?');
 let expenses2 = prompt('Введите обязательную статью расходов?');
 let amount2 = prompt('Во сколько это обойдется?');
 
-let budgetMonth = money - amount1 - amount2;
+let budgetMonth = money - (amount1 + amount2);
 console.log('Бюджет на месяц: ' + budgetMonth);
 let monthsToMission = Math.ceil(mission / budgetMonth);
 console.log('Месяцев до достижения цели: ' + monthsToMission);
