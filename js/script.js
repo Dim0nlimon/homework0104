@@ -3,7 +3,7 @@
 let money = 30000;
 let income = '500';
 let addExpenses = 'Интернет, Такси, Коммуналка';
-let deposit = true;
+let deposit;
 let mission = 200000;
 let period = 6;
 
@@ -13,13 +13,20 @@ const showTypeOf = function (finances) {
 
 console.log(showTypeOf(money));
 console.log(showTypeOf(income));
-console.log(showTypeOf(deposit));
+
 
 
 
 money = prompt('Ваш месячный доход?');
 addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
 deposit = prompt('Есть ли у вас депозит в банке?');
+
+if (deposit > 0) {
+  deposit = true;
+} else {
+  deposit = false;
+}
+console.log(showTypeOf(deposit));
 
 
 let expenses1 = prompt('Введите обязательную статью расходов?');
