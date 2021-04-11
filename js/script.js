@@ -10,7 +10,6 @@ let start = function () {
     money = prompt('Ваш месячный доход?', '50000');
   } while (!isNumber(money));
 };
-
 start();
 
 
@@ -34,12 +33,21 @@ let appData = {
 
     if (confirm('Есть ли у вас дополнительный заработок?')) {
       let itemIncome = prompt('Какой у вас дополнительный заработок?', 'Такси');
+      while (!isNaN(itemIncome)) {
+        itemIncome = prompt('Какой у вас дополнительный заработок?', 'Такси');
+      }
       let cashIncome = prompt('Сколько в месяц зарабатываете на этом?', 1000);
+      while (isNaN(cashIncome)) {
+        cashIncome = prompt('Сколько в месяц зарабатываете на этом?', 1000);
+      }
       appData.income[itemIncome] = cashIncome;
     }
 
     for (let i = 0; i < 2; i++) {
       appData.expensesList[i] = prompt('Введите обязательную статью расходов?');
+      while (!isNaN(appData.expensesList[i])) {
+        appData.expensesList[i] = prompt('Введите обязательную статью расходов?');
+      }
       let a = appData.expensesList[i];
       appData.amount[i] = prompt('Во сколько это обойдется?');
       let b = appData.amount[i];
@@ -83,16 +91,20 @@ let appData = {
   getInfoDeposit: function () {
     if (appData.deposit) {
       appData.percentDeposit = prompt('Какой годовой процент?', '10');
+      while (isNaN(appData.percentDeposit)) {
+        appData.percentDeposit = prompt('Какой годовой процент?', '10');
+      }
       appData.moneyDeposit = prompt('Какая сумма заложена?', '1000');
+      while (isNaN(appData.moneyDeposit)) {
+        appData.moneyDeposit = prompt('Какая сумма заложена?', '1000');
+      }
     }
-
   },
 
   calcSavedMoney: function () {
     return appData.budgetMonth * appData.period;
   }
-
-}; //end app
+}; //end appData
 
 appData.asking();
 appData.getExpensesMonth();
@@ -115,6 +127,7 @@ for (let i = 0; i < addExpensesArr.length; i++) {
 }
 let x = addExpensesArr.toString();
 console.log('Возможные расходы: ' + x);
+
 appData.getInfoDeposit();
 
 // console.log('Наша программа включает в себя данные: ');
