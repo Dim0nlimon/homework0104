@@ -52,7 +52,7 @@ let appData = {
       appData.amount[i] = prompt('Во сколько это обойдется?');
       let b = appData.amount[i];
       appData.expenses[a] = +b;
-      while (isNaN(parseFloat(appData.amount[i]))) {
+      while (isNaN(appData.amount[i])) {
         appData.amount[i] = prompt('Во сколько это обойдется?');
       }
       appData.spendings += Number(appData.amount[i]);
