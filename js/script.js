@@ -1,5 +1,44 @@
 'use strict';
 
+const countBtn = document.querySelector('#start');
+
+const plusBtnAddIncome = document.getElementsByTagName('button')[0];
+const plusBtnAddExpenses = document.getElementsByTagName('button')[1];
+
+const checkBox = document.querySelector('#deposit-check');
+
+const additionalIncomeItems = document.querySelectorAll('.additional_income-item');
+
+const dailyBudget = document.getElementsByClassName('budget_day-value');
+const monthExpenses = document.getElementsByClassName('expenses_month-value');
+const addIncomeValue = document.getElementsByClassName('additional_income-value');
+const addExpensesValue = document.getElementsByClassName('additional_expenses-value');
+const incomePeriodValue = document.getElementsByClassName('income_period-value');
+const targetMonthValue = document.getElementsByClassName('target_month-value');
+
+const salaryAmount = document.querySelector('.salary-amount');
+const incomeTitle = document.querySelector('[placeholder="Наименование"]');
+const incomeAmount = document.querySelector('.income-amount');
+
+
+const potentialIncomeItem = document.querySelector('.additional_income-item');
+
+const expensesItem = document.querySelector('.expenses-items');
+const expensesTitle = expensesItem.querySelector('.expenses-title');
+const expensesAmount = expensesItem.querySelector('.expenses-amount');
+
+const potentialExpenses = document.querySelector('[placeholder="название"]');
+
+const isDeposit = document.querySelector('.deposit-label');
+const depositCheckbox = isDeposit.querySelector('#deposit-check');
+const depositAmount = document.querySelector('.deposit-amount');
+const depositPercent = document.querySelector('.deposit-percent');
+const targetAmount = document.querySelector('.target-amount');
+const periodSelect = document.querySelector('.period-select');
+
+
+
+
 let money;
 let isNumber = function (money) {
   return !isNaN(parseFloat(money)) && isFinite(money);
@@ -28,7 +67,7 @@ let appData = {
   budgetMonth: 0,
   expensesMonth: 0, //обязательные траты
   period: 3,
-  addExpenses: prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'интернет,кафе'),
+  addExpenses: prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'тест, ТЕСТ , теСТ,ТЕст ,тЕСт , ТЕСТ'),
   asking: function () {
 
     if (confirm('Есть ли у вас дополнительный заработок?')) {
@@ -118,59 +157,18 @@ if (appData.getTargetMonth() > 0) {
 }
 appData.getStatusIncome();
 
-let addExpensesArr = appData.addExpenses.split(',');
-for (let i = 0; i < addExpensesArr.length; i++) {
-  addExpensesArr[i] = addExpensesArr[i].charAt(0).toUpperCase() + addExpensesArr[i].slice(1);
-  if (i > 0) {
-    addExpensesArr[i] = ' ' + addExpensesArr[i];
-  }
-}
-let x = addExpensesArr.toString();
-console.log('Возможные расходы: ' + x);
+
 
 appData.getInfoDeposit();
 
-// console.log('Наша программа включает в себя данные: ');
-// for (let key in appData) {
-//   console.log(key + ': ' + appData[key]);
-// }
 
-
-
-let countBtn = document.querySelector('#start');
-
-let plusBtnAddIncome = document.getElementsByTagName('button')[0];
-let plusBtnAddExpenses = document.getElementsByTagName('button')[1];
-
-let checkBox = document.querySelector('#deposit-check');
-
-let additionalIncomeItems = document.querySelectorAll('.additional_income-item');
-
-let dailyBudget = document.getElementsByClassName('budget_day-value');
-let monthExpenses = document.getElementsByClassName('expenses_month-value');
-let addIncomeValue = document.getElementsByClassName('additional_income-value');
-let addExpensesValue = document.getElementsByClassName('additional_expenses-value');
-let incomePeriodValue = document.getElementsByClassName('income_period-value');
-let targetMonthValue = document.getElementsByClassName('target_month-value');
-
-let salaryAmount = document.querySelector('.salary-amount');
-let incomeTitle = document.querySelector('[placeholder="Наименование"]');
-let incomeAmount = document.querySelector('.income-amount');
-
-
-let potentialIncomeItem = document.querySelector('.additional_income-item');
-
-let expensesItem = document.querySelector('.expenses-items');
-let expensesTitle = expensesItem.querySelector('.expenses-title');
-let expensesAmount = expensesItem.querySelector('.expenses-amount');
-
-let potentialExpenses = document.querySelector('[placeholder="название"]');
-
-let isDeposit = document.querySelector('.deposit-label');
-let depositCheckbox = isDeposit.querySelector('#deposit-check');
-let depositAmount = document.querySelector('.deposit-amount');
-let depositPercent = document.querySelector('.deposit-percent');
-let targetAmount = document.querySelector('.target-amount');
-let periodSelect = document.querySelector('.period-select');
-
-
+let j = '';
+let addExpensesArr = appData.addExpenses.split(',');
+for (let i = 0; i < addExpensesArr.length; i++) {
+  addExpensesArr[i] = addExpensesArr[i].toLowerCase(); //lowered
+  addExpensesArr[i] = addExpensesArr[i].trim(); //trimmed
+  addExpensesArr[i] = addExpensesArr[i].charAt(0).toUpperCase() + addExpensesArr[i].substr(1); //uppercased
+  j = j + addExpensesArr[i] + ', ';
+}
+j = j.substring(0, j.length - 2);
+console.log('Возможные расходы: ' + j);
