@@ -28,7 +28,7 @@ let appData = {
   budgetMonth: 0,
   expensesMonth: 0, //обязательные траты
   period: 3,
-  addExpenses: prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'интернет,кафе'),
+  addExpenses: prompt('Перечислите возможные расходы за рассчитываемый период через запятую', ' тест,       ТЕСТ , теСТ   ,ТЕст ,тЕСт , ТЕСТ'),
   asking: function () {
 
     if (confirm('Есть ли у вас дополнительный заработок?')) {
@@ -118,19 +118,15 @@ if (appData.getTargetMonth() > 0) {
 }
 appData.getStatusIncome();
 
+let j = '';
 let addExpensesArr = appData.addExpenses.split(',');
 for (let i = 0; i < addExpensesArr.length; i++) {
-  addExpensesArr[i] = addExpensesArr[i].charAt(0).toUpperCase() + addExpensesArr[i].slice(1);
-  if (i > 0) {
-    addExpensesArr[i] = ' ' + addExpensesArr[i];
-  }
+  addExpensesArr[i] = addExpensesArr[i].toLowerCase(); //lowered
+  addExpensesArr[i] = addExpensesArr[i].trim(); //trimmed
+  addExpensesArr[i] = addExpensesArr[i].charAt(0).toUpperCase() + addExpensesArr[i].substr(1); //uppercased
+  j = j + addExpensesArr[i] + ', ';
 }
-let x = addExpensesArr.toString();
-console.log('Возможные расходы: ' + x);
+j = j.substring(0, j.length - 2);
+console.log(j);
 
 appData.getInfoDeposit();
-
-// console.log('Наша программа включает в себя данные: ');
-// for (let key in appData) {
-//   console.log(key + ': ' + appData[key]);
-// }
