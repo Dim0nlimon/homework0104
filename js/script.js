@@ -24,7 +24,6 @@ liBookTwo[6].after(liBookTwo[8]);
 liBookTwo[9].after(liBookTwo[2]);
 const bookFiveList = book[5].querySelector('ul');
 const liBookFive = bookFiveList.querySelectorAll('li');
-console.log(liBookFive);
 liBookFive[1].after(liBookFive[9]);
 liBookFive[3].after(liBookFive[2]);
 liBookFive[4].after(liBookFive[2]);
