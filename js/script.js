@@ -1,6 +1,7 @@
  'use strict';
 
  const countBtn = document.querySelector('#start'); //рассчитать
+ const cancelBtn = document.querySelector('#cancel'); //сбросить
  const incomePlus = document.getElementsByTagName('button')[0]; // первый +
  const expensesPlus = document.getElementsByTagName('button')[1]; //второй +
  const checkBox = document.querySelector('#deposit-check'); // deposit checkbox
@@ -33,6 +34,9 @@
  const additionalExpensesItem = document.querySelector('.additional_expenses-item');
  const additionalIncomeItem = document.querySelectorAll('.additional_income-item');
  let incomeItems = document.querySelectorAll('.income-items');
+ let allInputs = document.getElementsByTagName('input');
+
+
 
 
 
@@ -78,8 +82,6 @@
      targetMonthValue.value = Math.ceil(this.getTargetMonth());
      periodSelect.addEventListener('input', this.periodSelectChange());
      incomePeriodValue.value = this.calcPeriod();
-     //  console.log(this);
-
    },
 
    addExpensesBlock: function () {
@@ -213,16 +215,37 @@
      } else {
        countBtn.setAttribute('disabled', true);
      }
+   },
 
+   blockTextInputs: function () {
+     for (var i = 0; i < allInputs.length; i++) {
+       if (allInputs[i].type === 'text') {
+         allInputs[i].setAttribute('disabled', true);
+       }
+     }
+     countBtn.style.display = 'none';
+     cancelBtn.style.display = 'block';
+   },
+   reset: function () {
+     for (var i = 0; i < allInputs.length; i++) {
+       if (allInputs[i].type === 'text') {
+         allInputs[i].removeAttribute('disabled');
+         allInputs[i].value = '';
+       }
+     }
+     countBtn.style.display = 'block';
+     countBtn.setAttribute('disabled', true);
+     cancelBtn.style.display = 'none';
    }
  }; //end appData
 
  countBtn.addEventListener('click', appData.start); //рассчитать
+ countBtn.addEventListener('click', appData.blockTextInputs); //рассчитать
  expensesPlus.addEventListener('click', appData.addExpensesBlock); // добавление поля обязательных расходов
  incomePlus.addEventListener('click', appData.addIncomeBlock); // добавление поля обязательных расходов
  periodSelect.addEventListener('input', appData.periodSelectChange);
  salaryAmount.addEventListener('input', appData.btnEnabled);
-
+ cancelBtn.addEventListener('click', appData.reset);
 
 
  appData.getStatusIncome();
