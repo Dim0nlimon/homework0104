@@ -70,14 +70,16 @@
    },
 
    showResult: function () {
-     budgetMonthValue.value = appData.budgetMonth;
-     budgetDayValue.value = appData.budgetDay;
-     expensesMonthValue.value = appData.expensesMonth;
-     additionalExpensesValue.value = appData.addExpenses.join(', ');
-     additionalIncomeValue.value = appData.addIncome.join(', ');
-     targetMonthValue.value = Math.ceil(appData.getTargetMonth());
-     periodSelect.addEventListener('input', appData.periodSelectChange());
-     incomePeriodValue.value = appData.calcPeriod();
+     budgetMonthValue.value = this.budgetMonth;
+     budgetDayValue.value = this.budgetDay;
+     expensesMonthValue.value = this.expensesMonth;
+     additionalExpensesValue.value = this.addExpenses.join(', ');
+     additionalIncomeValue.value = this.addIncome.join(', ');
+     targetMonthValue.value = Math.ceil(this.getTargetMonth());
+     periodSelect.addEventListener('input', this.periodSelectChange());
+     incomePeriodValue.value = this.calcPeriod();
+     //  console.log(this);
+
    },
 
    addExpensesBlock: function () {
@@ -107,17 +109,17 @@
        }
      });
    },
+
    getIncome: function () {
      incomeItems.forEach(function (item) {
        let itemIncome = item.querySelector('.income-title').value;
        let itemExpenses = item.querySelector('.income-amount').value;
        if (itemIncome !== '' && itemExpenses !== '') {
-         appData.income[itemIncome] = itemExpenses;
+         this.income[itemIncome] = itemExpenses;
        }
      });
-
      for (let key in appData.income) {
-       appData.incomeMonth += +appData.income[key];
+       this.incomeMonth += +appData.income[key];
      }
    },
 
@@ -126,7 +128,7 @@
      addExpenses.forEach(function (item) {
        item = item.trim();
        if (item !== '') {
-         appData.addExpenses.push(item);
+         this.addExpenses.push(item);
        }
      });
    },
@@ -135,70 +137,71 @@
      additionalIncomeItem.forEach(function (item) {
        let itemValue = item.value.trim();
        if (itemValue !== '') {
-         appData.addIncome.push(itemValue);
+         this.addIncome.push(itemValue);
        }
      });
    },
 
-   asking: function () {
-     if (confirm('Есть ли у вас дополнительный заработок?')) {
-       let itemIncome = prompt('Какой у вас дополнительный заработок?', 'Такси');
-       while (!isNaN(itemIncome)) {
-         itemIncome = prompt('Какой у вас дополнительный заработок?', 'Такси');
-       }
-       let cashIncome = prompt('Сколько в месяц зарабатываете на этом?', 1000);
-       while (isNaN(cashIncome)) {
-         cashIncome = prompt('Сколько в месяц зарабатываете на этом?', 1000);
-       }
-       appData.income[itemIncome] = cashIncome;
-     }
-     appData.deposit = confirm('Есть ли у вас депозит в банке?');
-   },
+   //  asking: function () {
+   //    if (confirm('Есть ли у вас дополнительный заработок?')) {
+   //      let itemIncome = prompt('Какой у вас дополнительный заработок?', 'Такси');
+   //      while (!isNaN(itemIncome)) {
+   //        itemIncome = prompt('Какой у вас дополнительный заработок?', 'Такси');
+   //      }
+   //      let cashIncome = prompt('Сколько в месяц зарабатываете на этом?', 1000);
+   //      while (isNaN(cashIncome)) {
+   //        cashIncome = prompt('Сколько в месяц зарабатываете на этом?', 1000);
+   //      }
+   //      appData.income[itemIncome] = cashIncome;
+   //    }
+   //    appData.deposit = confirm('Есть ли у вас депозит в банке?');    
+   //  },
 
    getExpensesMonth: function () {
      let expensesSum = 0;
-     for (let prop in appData.expenses) {
-       expensesSum += +appData.expenses[prop];
+     for (let prop in this.expenses) {
+       expensesSum += +this.expenses[prop];
      }
-     appData.expensesMonth = expensesSum;
+     this.expensesMonth = expensesSum;
    },
 
    getBudget: function () {
-     appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
-     appData.budgetDay = Math.floor(appData.budgetMonth / 30);
+     this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
+     this.budgetDay = Math.floor(this.budgetMonth / 30);
    },
 
    getTargetMonth: function () {
-     return targetAmount.value / appData.budgetMonth;
+     return targetAmount.value / this.budgetMonth;
+
    },
 
    getStatusIncome: function () {
-     if (appData.budgetDay >= 1200) {
+     if (this.budgetDay >= 1200) {
        console.log('У вас высокий уровень дохода');
-     } else if (appData.budgetDay > 600 && appData.budgetDay < 1200) {
+     } else if (this.budgetDay > 600 && this.budgetDay < 1200) {
        console.log('У вас средний уровень дохода');
-     } else if (appData.budgetDay <= 600 && appData.budgetDay > 0) {
+     } else if (this.budgetDay <= 600 && this.budgetDay > 0) {
        console.log('К сожалению у вас уровень дохода ниже среднего');
-     } else if (appData.budgetDay < 0) {
+     } else if (this.budgetDay < 0) {
        console.log('Что то пошло не так');
      }
    },
 
    getInfoDeposit: function () {
-     if (appData.deposit) {
-       appData.percentDeposit = prompt('Какой годовой процент?', '10');
-       while (isNaN(appData.percentDeposit)) {
-         appData.percentDeposit = prompt('Какой годовой процент?', '10');
+     if (this.deposit) {
+       this.percentDeposit = prompt('Какой годовой процент?', '10');
+       while (isNaN(this.percentDeposit)) {
+         this.percentDeposit = prompt('Какой годовой процент?', '10');
        }
-       appData.moneyDeposit = prompt('Какая сумма заложена?', '1000');
-       while (isNaN(appData.moneyDeposit)) {
-         appData.moneyDeposit = prompt('Какая сумма заложена?', '1000');
+       this.moneyDeposit = prompt('Какая сумма заложена?', '1000');
+       while (isNaN(this.moneyDeposit)) {
+         this.moneyDeposit = prompt('Какая сумма заложена?', '1000');
        }
      }
    },
 
    calcPeriod: function () {
-     return appData.budgetMonth * periodSelect.value;
+     return this.budgetMonth * periodSelect.value;
    },
    periodSelectChange: function () {
      periodAmount.innerHTML = periodSelect.value;
@@ -228,7 +231,7 @@
  let start = appData.start;
  let boundStart = start.bind(appData);
 
- 
+
 
  //  l et j = '';
  //  let addExpensesArr = appData.addExpenses.split(',');
