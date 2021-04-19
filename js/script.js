@@ -59,7 +59,6 @@
    moneyDeposit: 0,
    spendings: 0,
    start: function () {
-
      appData.budget = +salaryAmount.value;
      appData.getExpenses();
      appData.getIncome();
@@ -226,8 +225,12 @@
  appData.getStatusIncome();
  appData.getInfoDeposit();
 
+ let start = appData.start;
+ let boundStart = start.bind(appData);
 
- //  let j = '';
+ 
+
+ //  l et j = '';
  //  let addExpensesArr = appData.addExpenses.split(',');
  //  for (let i = 0; i < addExpensesArr.length; i++) {
  //    addExpensesArr[i] = addExpensesArr[i].toLowerCase(); //lowered
